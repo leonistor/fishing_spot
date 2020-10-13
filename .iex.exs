@@ -1,3 +1,4 @@
+# aliases ready in iex
 alias FishingSpot.{
   Repo,
   Location,
@@ -13,4 +14,5 @@ alias FishingSpot.{
 
 import Ecto.Query
 
+# call `q.()` to reload queries
 q = fn -> c("lib/queries.exs") end
