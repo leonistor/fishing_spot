@@ -1,24 +1,23 @@
 defmodule FishingSpot.Data do
   alias FishingSpot.{
     Repo,
-    Locations,
-    LocationsTrips,
-    LocationTypes,
-    Fishermen,
-    FishermenTrips,
+    Location,
+    LocationType,
+    LocationTrip,
+    Fisherman,
+    FishermanTrip,
     FishLanded,
     FishSpecies,
-    FlyTypes,
-    Trips
+    FlyType,
+    Trip
   }
 
   import Ecto.Query
 
   def generate do
-    # Mix.Task.run("ecto.drop", [FishingSpot.Repo])
-    # Mix.Task.run("ecto.create", [FishingSpot.Repo])
-    # Mix.Task.run("ecto.migrate", [FishingSpot.Repo])
+    Logger.disable(self())
     _generate()
+    Logger.enable(self())
   end
 
   defp _generate do
@@ -33,50 +32,50 @@ defmodule FishingSpot.Data do
     fish_types = [rainbow_trout, brown_trout, lake_trout, brook_trout, cutthroat_trout]
 
     IO.puts("...FlyTypes")
-    muddler = Repo.insert!(%FlyTypes{name: "Muddler Minnow"})
-    hares_ear = Repo.insert!(%FlyTypes{name: "Hare's' Ear"})
-    copper_john = Repo.insert!(%FlyTypes{name: "Copper John"})
-    royal_wulff = Repo.insert!(%FlyTypes{name: "Royal Wulff"})
-    morning_dunn = Repo.insert!(%FlyTypes{name: "Morning Dunn"})
+    muddler = Repo.insert!(%FlyType{name: "Muddler Minnow"})
+    hares_ear = Repo.insert!(%FlyType{name: "Hare's' Ear"})
+    copper_john = Repo.insert!(%FlyType{name: "Copper John"})
+    royal_wulff = Repo.insert!(%FlyType{name: "Royal Wulff"})
+    morning_dunn = Repo.insert!(%FlyType{name: "Morning Dunn"})
     flies = [muddler, hares_ear, copper_john, royal_wulff, morning_dunn]
 
-    IO.puts("...LocationTypes")
-    lake = Repo.insert!(%LocationTypes{name: "Lake"})
-    pond = Repo.insert!(%LocationTypes{name: "Pond"})
-    spring_creek = Repo.insert!(%LocationTypes{name: "Spring Creek"})
-    _stream = Repo.insert!(%LocationTypes{name: "Stream"})
-    river = Repo.insert!(%LocationTypes{name: "River"})
-    tail_water = Repo.insert!(%LocationTypes{name: "Tail Water"})
+    IO.puts("...LocationType")
+    lake = Repo.insert!(%LocationType{name: "Lake"})
+    pond = Repo.insert!(%LocationType{name: "Pond"})
+    spring_creek = Repo.insert!(%LocationType{name: "Spring Creek"})
+    _stream = Repo.insert!(%LocationType{name: "Stream"})
+    river = Repo.insert!(%LocationType{name: "River"})
+    tail_water = Repo.insert!(%LocationType{name: "Tail Water"})
 
     IO.puts("...Fishermen")
 
     mark =
-      Repo.insert!(%Fishermen{name: "Mark", date_of_birth: %Date{year: 1970, month: 12, day: 25}})
+      Repo.insert!(%Fisherman{name: "Mark", date_of_birth: %Date{year: 1970, month: 12, day: 25}})
 
     joe =
-      Repo.insert!(%Fishermen{name: "Joe", date_of_birth: %Date{year: 1973, month: 10, day: 2}})
+      Repo.insert!(%Fisherman{name: "Joe", date_of_birth: %Date{year: 1973, month: 10, day: 2}})
 
     kirk =
-      Repo.insert!(%Fishermen{name: "Kirk", date_of_birth: %Date{year: 1980, month: 7, day: 21}})
+      Repo.insert!(%Fisherman{name: "Kirk", date_of_birth: %Date{year: 1980, month: 7, day: 21}})
 
     lew =
-      Repo.insert!(%Fishermen{name: "Lew", date_of_birth: %Date{year: 1981, month: 1, day: 11}})
+      Repo.insert!(%Fisherman{name: "Lew", date_of_birth: %Date{year: 1981, month: 1, day: 11}})
 
-    _fishermen = [mark, joe, kirk, lew]
+    fishermen = [mark, joe, kirk, lew]
 
     IO.puts("...Trips")
-    trip1 = Repo.insert!(%Trips{start_date: ~D[2012-06-05], end_date: ~D[2012-06-12]})
-    trip2 = Repo.insert!(%Trips{start_date: ~D[2012-10-15], end_date: ~D[2012-10-22]})
-    trip3 = Repo.insert!(%Trips{start_date: ~D[2013-09-01], end_date: ~D[2013-09-08]})
-    trip4 = Repo.insert!(%Trips{start_date: ~D[2014-07-15], end_date: ~D[2014-07-22]})
-    trip5 = Repo.insert!(%Trips{start_date: ~D[2014-08-08], end_date: ~D[2014-08-15]})
+    trip1 = Repo.insert!(%Trip{start_date: ~D[2012-06-05], end_date: ~D[2012-06-12]})
+    trip2 = Repo.insert!(%Trip{start_date: ~D[2012-10-15], end_date: ~D[2012-10-22]})
+    trip3 = Repo.insert!(%Trip{start_date: ~D[2013-09-01], end_date: ~D[2013-09-08]})
+    trip4 = Repo.insert!(%Trip{start_date: ~D[2014-07-15], end_date: ~D[2014-07-22]})
+    trip5 = Repo.insert!(%Trip{start_date: ~D[2014-08-08], end_date: ~D[2014-08-15]})
 
     _trips = [trip1, trip2, trip3, trip4, trip5]
 
     IO.puts("...Locations")
 
     lake_fork =
-      Repo.insert!(%Locations{
+      Repo.insert!(%Location{
         name: "Lake Fork",
         altitude: 8000,
         lat: Decimal.from_float(38.090942),
@@ -85,7 +84,7 @@ defmodule FishingSpot.Data do
       })
 
     blue_mesa =
-      Repo.insert!(%Locations{
+      Repo.insert!(%Location{
         name: "Blue Mesa",
         altitude: 7000,
         lat: Decimal.from_float(38.472406),
@@ -94,7 +93,7 @@ defmodule FishingSpot.Data do
       })
 
     main_elk =
-      Repo.insert!(%Locations{
+      Repo.insert!(%Location{
         name: "Main Elk Creek",
         altitude: 7000,
         lat: Decimal.from_float(39.729579),
@@ -103,7 +102,7 @@ defmodule FishingSpot.Data do
       })
 
     frying_pan =
-      Repo.insert!(%Locations{
+      Repo.insert!(%Location{
         name: "Frying Pan Tailwater",
         altitude: 6000,
         lat: Decimal.from_float(39.363448),
@@ -112,7 +111,7 @@ defmodule FishingSpot.Data do
       })
 
     unamed_pond =
-      Repo.insert!(%Locations{
+      Repo.insert!(%Location{
         name: "Unamed Pond",
         altitude: 5000,
         lat: Decimal.from_float(39.887929),
@@ -121,7 +120,7 @@ defmodule FishingSpot.Data do
       })
 
     white_river =
-      Repo.insert!(%Locations{
+      Repo.insert!(%Location{
         name: "North Fork White River",
         altitude: 5000,
         lat: Decimal.from_float(40.051879),
@@ -132,48 +131,74 @@ defmodule FishingSpot.Data do
     locations = [lake_fork, blue_mesa, main_elk, frying_pan, unamed_pond, white_river]
 
     IO.puts("...Trip to Locations")
-    Repo.insert!(%LocationsTrips{location_id: lake_fork.id, trip_id: trip1.id})
-    Repo.insert!(%LocationsTrips{location_id: blue_mesa.id, trip_id: trip1.id})
-    Repo.insert!(%LocationsTrips{location_id: main_elk.id, trip_id: trip2.id})
-    Repo.insert!(%LocationsTrips{location_id: frying_pan.id, trip_id: trip2.id})
-    Repo.insert!(%LocationsTrips{location_id: lake_fork.id, trip_id: trip3.id})
-    Repo.insert!(%LocationsTrips{location_id: blue_mesa.id, trip_id: trip3.id})
-    Repo.insert!(%LocationsTrips{location_id: main_elk.id, trip_id: trip4.id})
-    Repo.insert!(%LocationsTrips{location_id: frying_pan.id, trip_id: trip4.id})
-    Repo.insert!(%LocationsTrips{location_id: unamed_pond.id, trip_id: trip4.id})
-    Repo.insert!(%LocationsTrips{location_id: white_river.id, trip_id: trip4.id})
-    Repo.insert!(%LocationsTrips{location_id: lake_fork.id, trip_id: trip5.id})
+    Repo.insert!(%LocationTrip{location_id: lake_fork.id, trip_id: trip1.id})
+    Repo.insert!(%LocationTrip{location_id: blue_mesa.id, trip_id: trip1.id})
+    Repo.insert!(%LocationTrip{location_id: main_elk.id, trip_id: trip2.id})
+    Repo.insert!(%LocationTrip{location_id: frying_pan.id, trip_id: trip2.id})
+    Repo.insert!(%LocationTrip{location_id: lake_fork.id, trip_id: trip3.id})
+    Repo.insert!(%LocationTrip{location_id: blue_mesa.id, trip_id: trip3.id})
+    Repo.insert!(%LocationTrip{location_id: main_elk.id, trip_id: trip4.id})
+    Repo.insert!(%LocationTrip{location_id: frying_pan.id, trip_id: trip4.id})
+    Repo.insert!(%LocationTrip{location_id: unamed_pond.id, trip_id: trip4.id})
+    Repo.insert!(%LocationTrip{location_id: white_river.id, trip_id: trip4.id})
+    Repo.insert!(%LocationTrip{location_id: lake_fork.id, trip_id: trip5.id})
 
-    Repo.insert!(%FishermenTrips{fisherman_id: lew.id, trip_id: trip1.id})
-    Repo.insert!(%FishermenTrips{fisherman_id: lew.id, trip_id: trip2.id})
-    Repo.insert!(%FishermenTrips{fisherman_id: lew.id, trip_id: trip3.id})
-    Repo.insert!(%FishermenTrips{fisherman_id: lew.id, trip_id: trip4.id})
-    Repo.insert!(%FishermenTrips{fisherman_id: lew.id, trip_id: trip5.id})
-    Repo.insert!(%FishermenTrips{fisherman_id: kirk.id, trip_id: trip4.id})
-    Repo.insert!(%FishermenTrips{fisherman_id: kirk.id, trip_id: trip5.id})
-    Repo.insert!(%FishermenTrips{fisherman_id: joe.id, trip_id: trip1.id})
-    Repo.insert!(%FishermenTrips{fisherman_id: joe.id, trip_id: trip5.id})
-    Repo.insert!(%FishermenTrips{fisherman_id: mark.id, trip_id: trip1.id})
-    Repo.insert!(%FishermenTrips{fisherman_id: mark.id, trip_id: trip2.id})
-    Repo.insert!(%FishermenTrips{fisherman_id: mark.id, trip_id: trip3.id})
+    Repo.insert!(%FishermanTrip{fisherman_id: lew.id, trip_id: trip1.id})
+    Repo.insert!(%FishermanTrip{fisherman_id: lew.id, trip_id: trip2.id})
+    Repo.insert!(%FishermanTrip{fisherman_id: lew.id, trip_id: trip3.id})
+    Repo.insert!(%FishermanTrip{fisherman_id: lew.id, trip_id: trip4.id})
+    Repo.insert!(%FishermanTrip{fisherman_id: lew.id, trip_id: trip5.id})
+    Repo.insert!(%FishermanTrip{fisherman_id: kirk.id, trip_id: trip4.id})
+    Repo.insert!(%FishermanTrip{fisherman_id: kirk.id, trip_id: trip5.id})
+    Repo.insert!(%FishermanTrip{fisherman_id: joe.id, trip_id: trip1.id})
+    Repo.insert!(%FishermanTrip{fisherman_id: joe.id, trip_id: trip5.id})
+    Repo.insert!(%FishermanTrip{fisherman_id: mark.id, trip_id: trip1.id})
+    Repo.insert!(%FishermanTrip{fisherman_id: mark.id, trip_id: trip2.id})
+    Repo.insert!(%FishermanTrip{fisherman_id: mark.id, trip_id: trip3.id})
 
     # insert lies :-)
+    IO.puts("...Fish catched")
+
     Enum.each(1..1000, fn _ ->
-      some_catch = make_random_catch(locations, flies, fish_types)
+      some_catch = make_random_catch(30, 5, fishermen, locations, flies, fish_types)
       Repo.insert!(some_catch)
     end)
   end
 
-  def make_random_catch(locations, fly_types, fish_species) do
+  def make_random_catch(max_length, max_weight, fishermen, locations, flies, fish_types) do
+    fisherman = Enum.random(fishermen)
+    fisherman = Repo.preload(fisherman, :trips)
+    location = Enum.random(locations)
+    fly = Enum.random(flies)
+    trip = Enum.random(fisherman.trips)
+    fish = Enum.random(fish_types)
+    length = :random.uniform(max_length)
+    weight = :random.uniform(max_weight)
+    # all trips are 7 days long
+    catch_date = Date.add(trip.start_date, :random.uniform(7))
+    catch_date_time = NaiveDateTime.new!(catch_date, ~T[11:00:07])
+
+    %FishLanded{
+      date_and_time: catch_date_time,
+      fish_species_id: fish.id,
+      fisherman_id: fisherman.id,
+      fly_type_id: fly.id,
+      length: length,
+      location_id: location.id,
+      weight: weight
+    }
+  end
+
+  # old version
+  def _make_random_catch(locations, fly_types, fish_species) do
+    # get random row from database
     query =
-      from(FishermenTrips,
+      from(FishermanTrip,
         order_by: fragment("RANDOM()"),
         limit: 1
       )
 
     fisherman_trip = Repo.all(query) |> hd()
-    # fisher = Repo.get_by!(Fishermen, id: fisherman_trip.fisherman_id)
-    # should go through LocationsTrips. Bad schema
     location = Enum.random(locations)
     fly_type = Enum.random(fly_types)
     fish_specia = Enum.random(fish_species)
@@ -195,3 +220,5 @@ defmodule FishingSpot.Data do
     }
   end
 end
+
+FishingSpot.Data.generate()

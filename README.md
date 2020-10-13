@@ -17,3 +17,17 @@ https://www.glydergun.com/diving-into-ecto-part-2/
 ## .iex.exs
 
 Project-only aliases and functions.
+
+## DB gen
+
+`mix ecto.drop; mix ecto.create; mix ecto.migrate`
+
+`mix run priv/seeds.exs`
+
+## pgcli
+
+Saved query to estimate counts in public schema:
+
+```sql
+\ns table_counts SELECT schemaname, relname, n_live_tup FROM pg_stat_user_tables;
+```
